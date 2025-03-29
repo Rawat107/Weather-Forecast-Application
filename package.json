@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tailwindcss -i ./src/input.css -o ./src/output.css --minify && vite build",
-    "preview": "vite preview",
+    "start": "vite preview --port 10000",
     "tw:watch": "tailwindcss -i ./src/input.css -o ./src/output.css --watch"
   },
   "devDependencies": {
