@@ -6,6 +6,7 @@ export default defineConfig({
     port: 5173 // Development port (optional)
   },
   preview: {
-    port: 10000 // Render's required production port
+    host: '0.0.0.0',
+    port: 10000  
   }
 })
