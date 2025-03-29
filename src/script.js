@@ -5,7 +5,7 @@
 const API_KEY = import.meta.env.VITE_API_KEY;
 const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_KEY;
 
-const WEATHER_COLLECTIONS = '893395'; 
+// const WEATHER_COLLECTIONS = '893395'; 
 // Storm Chasing, Dramatic Skies, Weather Patterns, Weather.
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
 
@@ -221,7 +221,7 @@ function updateRecentSearches() {
 async function getWeatherBackground(condition) {
     try {
         const response = await fetch(
-            `https://api.unsplash.com/photos/random?query=${condition}+weather&client_id=${UNSPLASH_ACCESS_KEY}&orientation=landscape&w=1920&h=1080&content_filter=high&collections=${WEATHER_COLLECTIONS}`
+            `https://api.unsplash.com/photos/random?query=${condition}+weather&client_id=${UNSPLASH_ACCESS_KEY}&orientation=landscape&w=1920&h=1080&content_filter=high&collections=893395`
         );
 
         
@@ -232,7 +232,7 @@ async function getWeatherBackground(condition) {
         
     } catch (error) {
         console.error('Unsplash error:', error);
-        return `./public/img/Weather/Clouds.jpg`; // Fallback
+        return `./img/Weather/Clouds.jpg`; // Fallback
     }
 }
 
@@ -243,7 +243,7 @@ async function setWeatherBackground(condition) {
 
     } catch (error) {
         console.error('Failed to set background:', error);
-        document.body.style.backgroundImage = 'url(./public/img/Weather/Clouds.jpg)';
+        document.body.style.backgroundImage = 'url(./img/Weather/Clouds.jpg)';
     }
 }
 
