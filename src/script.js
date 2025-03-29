@@ -3,7 +3,7 @@
 // import { UNSPLASH_ACCESS_KEY } from "./config.js";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
-const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_KEY;
+const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 // const WEATHER_COLLECTIONS = '893395'; 
 // Storm Chasing, Dramatic Skies, Weather Patterns, Weather.
