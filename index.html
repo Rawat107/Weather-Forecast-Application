@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast</title>
+    <link href="./src/output.css" rel="stylesheet" />
+    <script
+      src="https://kit.fontawesome.com/9b3a0fd2a6.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="shortcut icon"
+      href="public/img/Wheather Icon.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body class="flex flex-col bg-cover bg-center bg-no-repeat min-h-screen">
+    <header
+      class="w-full pb-1 bg-gradient-to-r from-blue-400/50 to-indigo-400/50 backdrop-blur-md shadow-lg text-center"
+    >
+      <h1 class="text-2xl font-extrabold text-white drop-shadow-lg">
+        <img
+          src="./public/img/season.png"
+          alt="Wheather Icon"
+          class="inline-block h-[2em] w-[2em] align-middle mr-2 animate-spin-slow"
+        />
+        Weather Forecast App
+      </h1>
+    </header>
+
+    <main
+      class="w-full max-w-7xl flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8 mx-auto my-6 lg:my-10"
+    >
+      <!--(Search + Recently Searched) -->
+      <article
+        class="flex-1 w-full max-w-lg p-6 bg-white/40 shadow-2xl rounded-lg"
+      >
+        <h2
+          class="text-3xl font-extrabold text-blue-500 drop-shadow-md text-center"
+        >
+          Get City Weather
+        </h2>
+        <section
+          class="mt-4 flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2"
+        >
+          <input
+            id="cityInput"
+            type="text"
+            placeholder="Enter city name"
+            class="flex-1 p-3 border placeholder:font-medium placeholder:text-gray-950 border-gray-300 backdrop-blur-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
+          />
+          <button
+            id="searchBtn"
+            class="bg-blue-500 text-white px-4 py-3 rounded-lg shadow-lg hover:bg-cyan-700 w-full sm:w-auto cursor-pointer"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i> Search
+          </button>
+        </section>
+
+        <section class="relative my-6">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-850"></div>
+          </div>
+          <div class="relative flex justify-center">
+            <span
+              class="px-2 bg-white text-gray-500 text-sm font-bold rounded-2xl"
+              >OR</span
+            >
+          </div>
+        </section>
+
+        <section class="flex justify-center">
+          <button
+            id="currentLocationBtn"
+            class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-700 cursor-pointer"
+          >
+            <i class="fa-solid fa-location-crosshairs"></i> Use Current Location
+          </button>
+        </section>
+
+        <aside class="w-full mt-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-3">
+            <i class="fa-solid fa-clock-rotate-left mr-2"></i>Recently Searched:
+          </h3>
+          <ul
+            id="recentSearches"
+            class="mt-2 space-y-2 max-h-45 lg:max-h-68 overflow-y-auto thin-scrollbar text-gray-850"
+          ></ul>
+        </aside>
+      </article>
+
+      <!-- Right Article (Weather Results) -->
+      <article
+        class="flex-1 w-full max-w-lg lg:max-w-5xl p-6 bg-white/45 shadow-2xl rounded-lg hidden"
+        id="weatherContainer"
+      >
+        <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">
+          <i class="fa-solid fa-calendar-day"></i>
+          Today's Highlight
+        </h2>
+        <hr />
+        <section
+          id="weatherResult"
+          class="text-center mt-2 p-4 bg-blue-200/40 backdrop-blur-sm rounded-lg shadow-inner hidden"
+        >
+          <h3 class="text-2xl font-semibold" id="location"></h3>
+          <span class="font-semibold text-gray-950" id="date"></span>
+          <p class="text-lg font-semibold" id="temperature"></p>
+          <p
+            class="text-md font-semibold text-gray-950"
+            id="weatherCondition"
+          ></p>
+          <img
+            id="weatherIcon"
+            class="mx-auto my-3"
+            src=""
+            alt="Weather icon"
+          />
+          <p class="text-gray-950 font-medium">
+            <i class="fa-solid fa-wind mr-1"></i>
+            Wind
+            <span id="windSpeed"></span> km/h
+            <span class="mx-2">|</span>
+            <i class="fa-solid fa-droplet mr-1"></i>
+            Humidity
+            <span id="humidity"></span>%
+            <span class="mx-2">|</span>
+            <i class="fa-solid fa-eye mr-1"></i>
+            Visibilty
+            <span id="visibility"></span> Km
+          </p>
+        </section>
+        <section class="mt-6 hidden" id="forecastSection">
+          <h3
+            class="text-xl font-semibold text-gray-800 mb-3 drop-shadow-lg text-center"
+          >
+            <i class="fa-solid fa-calendar-days mr-2"></i>
+            5-Days Forecast
+          </h3>
+          <hr />
+          <div
+            class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mt-2 text-center justify-between"
+            id="forecastContainer"
+          >
+            <div
+              class="p-3 bg-blue-200/40 rounded-lg backdrop-blur-sm transform transition-opacity duration-200 ease hover:-translate-y-1 hover:shadow-lg min-h-[180px] hidden"
+              id="day1"
+            ></div>
+            <div
+              class="p-3 bg-blue-200/40 rounded-lg backdrop-blur-sm transform transition-opacity duration-200 ease hover:-translate-y-1 hover:shadow-lg min-h-[180px] hidden"
+              id="day2"
+            ></div>
+            <div
+              class="p-3 bg-blue-200/40 rounded-lg backdrop-blur-sm transform transition-opacity duration-200 ease hover:-translate-y-1 hover:shadow-lg min-h-[180px] hidden"
+              id="day3"
+            ></div>
+            <div
+              class="p-3 bg-blue-200/40 rounded-lg backdrop-blur-sm transform transition-opacity duration-200 ease hover:-translate-y-1 hover:shadow-lg min-h-[180px] hidden"
+              id="day4"
+            ></div>
+            <div
+              class="p-3 bg-blue-200/40 rounded-lg backdrop-blur-sm transform transition-opacity duration-200 ease hover:-translate-y-1 hover:shadow-lg min-h-[180px] hidden"
+              id="day5"
+            ></div>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer
+      class="w-full p-1 bg-gradient-to-r from-gray-100/50 to-gray-300/50 backdrop-blur-md text-gray-800 text-center text-sm mt-auto shadow-lg"
+    >
+      <p class="text-lg font-semibold tracking-wide">
+        &copy; 2025 Weather App | Developed by Vaibhav Rawat
+      </p>
+      <div class="mt-3 space-x-4">
+        <a
+          href="https://linkedin.com/in/vr107"
+          target="_blank"
+          class="text-gray-800 hover:text-gray-300 transition-all duration-300"
+        >
+          <i class="fab fa-linkedin text-xl"></i>
+        </a>
+        <a
+          href="https://github.com/Rawat107"
+          target="_blank"
+          class="text-gray-800 hover:text-gray-300 transition-all duration-300"
+        >
+          <i class="fab fa-github text-xl"></i>
+        </a>
+        <a
+          href="https://twitter.com/vaibhavrawat495"
+          target="_blank"
+          class="text-gray-800 hover:text-gray-300 transition-all duration-300"
+        >
+          <i class="fab fa-twitter text-xl"></i>
+        </a>
+      </div>
+    </footer>
+
+    <script type="module" src="src/script.js"></script>
+  </body>
+</html>
