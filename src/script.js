@@ -285,7 +285,7 @@ function updateRecentSearches() {
                 <span>${city}</span>
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-arrow-rotate-left ml-2 text-blue-500"></i>
-                    <button class="clear-single-btn absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-700">
+                    <button class="clear-single-btn absolute right-3 top-1/2 -translate-y-1/2 opacity-80 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-700">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
