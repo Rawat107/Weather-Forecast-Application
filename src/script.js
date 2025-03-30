@@ -151,13 +151,29 @@ function updateForecastUI(forecastList) {
     forecastContainer.classList.remove('hidden');
     forecastSection.classList.remove('hidden');
 
+
+    // Group forecast by date
+    const forecastByDate = {};
+    forecastList.forEach(forecast => {
+        const date = new Date(forecast.dt * 1000).toLocaleDateString();
+        if(!forecastByDate[date]) forecastByDate[date] = [];
+        forecastByDate[date].push(forecast);
+    });
+
+    // Get dates starting from tomorrow
+    const dates = Object.keys(forecastByDate).slice(1, 6);
+
     const forecastDivs = ["day1", "day2", "day3", "day4", "day5"];
     
     forecastDivs.forEach((id, index) => {
-        const forecastIndex = index * 8; // Get data for every 24 hours
-        if (forecastIndex >= forecastList.length) return;
-        
-        const forecast = forecastList[forecastIndex];
+        const dateForecasts = forecastByDate[dates[index]];
+        if(!dateForecasts) return;
+
+        // Get midday forecast or first available
+        const forecast = dateForecasts.find(f => {
+            const hours = new Date(f.dt * 1000).getHours();
+            return hours === 12;
+        }) || dateForecasts[0];
 
         const dayElement = document.getElementById(id);
         dayElement.classList.remove('hidden');
