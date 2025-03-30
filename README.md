@@ -122,7 +122,7 @@ For detailed development process, challenges faced, and technical deep dive:
 
 - `npm run dev`: Start development server
 - `npm run build`: Create production build
-- `npm run preview`: Locally preview production build
+- `npm run start`: Locally preview production build
 
 ## License
 
