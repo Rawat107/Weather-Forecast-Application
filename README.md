@@ -1,51 +1,13 @@
 # Weather Forecast Application
 
-![Weather App Preview](https://via.placeholder.com/800x400.png?text=WeatherVista+Screenshot) <!-- Add your screenshot here -->
+Live Demo: [Link](https://weather-forecast-app-bs2a.onrender.com)
 
-A weather forecast application that provides real-time weather data with dynamic backgrounds. Features include current weather conditions, 5-day forecast, recent search history, and location-based weather lookup.
+A weather forecast application that provides real-time weather data with dynamic backgrounds. Built with HTML, Tailwind CSS, and Vanilla JavaScript. Its features include current weather conditions, 5-day forecast, recent search history, and location-based weather lookup.
 
-## Key Features
+## 📚 Documentation
 
-- Real-time weather data for any city worldwide
-- 5-day weather forecast with hourly trends
-- Dynamic background images based on current weather
-- Recent search history with quick access
-- Geolocation support for instant local weather
-- Responsive design for all screen sizes
-
-## Technologies Used
-
-- OpenWeatherMap API (Weather data)
-- Unsplash API (Background images)
-- Vanilla JavaScript (ES6+)
-- Tailwind CSS (Styling)
-- Vite (Build tool)
-- LocalStorage (Recent searches)
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js v16.x or higher
-- npm v7.x or higher
-- API keys from [OpenWeatherMap](https://openweathermap.org/api) and [Unsplash](https://unsplash.com/developers)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/weather-app.git
-   cd weather-app
-   ```
-
-Here's a comprehensive README.md for your weather application:
-
-````markdown
-# WeatherVista - Modern Weather Application
-
-![Weather App Preview](https://via.placeholder.com/800x400.png?text=WeatherVista+Screenshot) <!-- Add your screenshot here -->
-
-A modern weather application that provides real-time weather data with dynamic backgrounds. Features include current weather conditions, 5-day forecast, recent search history, and location-based weather lookup.
+For detailed development process, challenges faced, and technical deep dive:  
+[View Full Documentation](https://github.com/Rawat107/Weather-Forecast-Application)
 
 ## Key Features
 
@@ -80,8 +42,7 @@ A modern weather application that provides real-time weather data with dynamic b
    git clone https://github.com/your-username/weather-app.git
    cd weather-app
    ```
-````
-
+   
 2. **Create environment file**
    Create a `.env` file in the root directory with the following content:
 
