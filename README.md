@@ -7,7 +7,7 @@ A weather forecast application that provides real-time weather data with dynamic
 ## Documentation
 
 For detailed development process, challenges faced, and technical deep dive:  
-[View Full Documentation]([https://github.com/Rawat107/Weather-Forecast-Application](https://github.com/Rawat107/Weather-Forecast-Application/blob/main/Weather%20Forecast%20Application%20Documentation.docx))
+[View Full Documentation](https://github.com/Rawat107/Weather-Forecast-Application/blob/main/Weather%20Forecast%20Application%20Documentation.doc)
 
 ## Key Features
 
