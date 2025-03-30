@@ -4,7 +4,7 @@ Live Demo: [Link](https://weather-forecast-app-bs2a.onrender.com)
 
 A weather forecast application that provides real-time weather data with dynamic backgrounds. Built with HTML, Tailwind CSS, and Vanilla JavaScript. Its features include current weather conditions, 5-day forecast, recent search history, and location-based weather lookup.
 
-## 📚 Documentation
+## Documentation
 
 For detailed development process, challenges faced, and technical deep dive:  
 [View Full Documentation](https://github.com/Rawat107/Weather-Forecast-Application)
@@ -56,14 +56,18 @@ For detailed development process, challenges faced, and technical deep dive:
    ```bash
    npm install
    ```
+   
+4. **Run Tailwind CSS in watch mode** (in a separate terminal)
+   ```bash
+   npm run tw:watch
 
-4. **Run the application**
+5. **Run the application**
 
    ```bash
    npm run dev
    ```
 
-5. **Build for production**
+6. **Build for production**
    ```bash
    npm run build
    ```
