@@ -1,18 +1,22 @@
-// Openweathermap API Key
-// import { API_KEY } from "./config.js";
-// import { UNSPLASH_ACCESS_KEY } from "./config.js";
+// ----------------------------
+// API Configuration Section
+// ----------------------------
 
-const API_KEY = import.meta.env.VITE_API_KEY;
-const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
+// OpenWeatherMap API configuration
+const API_KEY = import.meta.env.VITE_API_KEY; // Environment variable for API key
+const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY; // Unsplash API key
+const BASE_URL = 'https://api.openweathermap.org/data/2.5/'; // Base URL for weather API
 
-// const WEATHER_COLLECTIONS = '893395'; 
-// Storm Chasing, Dramatic Skies, Weather Patterns, Weather.
-const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
+// ----------------------------
+// DOM Element Selection
+// ----------------------------
 
-// Selecting elements
+// Input elements
 const cityInput = document.getElementById('cityInput');
 const searchBtn = document.getElementById('searchBtn');
 const currentLocationBtn = document.getElementById('currentLocationBtn');
+
+// Display Elements
 const recentSearches = document.getElementById('recentSearches');
 const weatherContainer = document.getElementById('weatherContainer');
 const weatherResult = document.getElementById('weatherResult');
@@ -26,15 +30,40 @@ const humidityEle = document.getElementById('humidity');
 const visibilityEle = document.getElementById('visibility')
 const forecastContainer = document.getElementById('forecastContainer');
 const forecastSection= document.getElementById('forecastSection');
+const clearBtn = document.getElementById('clearAllButton');
 
 
+// ----------------------------
+// Event Listeners
+// ----------------------------
+
+// Handle Enter key in city input
 cityInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         fetchWeatherByCity(cityInput.value);
     }
 });
 
-// fetch weather by city name
+// Search button click handler
+searchBtn.addEventListener('click', () => fetchWeatherByCity(cityInput.value));
+
+// Current location button handler
+currentLocationBtn.addEventListener('click', fetchWeatherByLocation);
+
+// Load recent searches on page load
+window.addEventListener('load', updateRecentSearches);
+
+// Add event listener for clear all button (add this at bottom with other event listeners)
+clearBtn.addEventListener('click', clearAllRecentSearches);
+
+
+// ----------------------------
+// Core Weather Functions
+// ----------------------------
+
+
+// Fetch weather data  by city name
+
 async function fetchWeatherByCity(city){
      // Trim and validate input
      city.trim();
@@ -59,18 +88,25 @@ async function fetchWeatherByCity(city){
      }
 
     try{
+        // Show loading state
         searchBtn.disabled = true;
-searchBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Searching';
+        searchBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Searching';
+
+        // API response
         const response = await fetch(`${BASE_URL}weather?q=${city}&units=metric&appid=${API_KEY}`);
         if (!response.ok) throw new Error("City not found");
+
+        // Process response
         const data = await response.json();
         updateWeatherUI(data);
         saveRecentSearch(city);
     } catch(error) {
+        // Error handling and user feedback
         let userMessage = 'City not found - please check spelling';
         alert(userMessage);
         cityInput.focus();
     } finally {
+        // Reset button state
         searchBtn.disabled = false;
         searchBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Search';
     }
@@ -91,6 +127,7 @@ async function fetchWeatherByLocation() {
             if(!response.ok) throw new Error('location data unavailable');
             const data = await response.json();
             updateWeatherUI(data);
+            saveRecentSearch(data.name)
         } catch (error){
             alert(error.message);
         }
@@ -134,7 +171,13 @@ function updateWeatherUI(data){
 };
 
 
-// Fetch 7-day forecast
+// ----------------------------
+// Forecast Functions
+// ----------------------------
+
+// Fetch 5-day forecast
+// lat - Latitude
+// lon - Longitude
 async function fetchForecast(lat, lon){
     try{
         const response = await fetch(`${BASE_URL}forecast?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`)
@@ -147,6 +190,8 @@ async function fetchForecast(lat, lon){
 }
 
 // Update UI with forecast data
+// forecastList - List of forecast data points
+
 function updateForecastUI(forecastList) {
     forecastContainer.classList.remove('hidden');
     forecastSection.classList.remove('hidden');
@@ -203,11 +248,23 @@ function updateForecastUI(forecastList) {
     });
 }
 
+// ----------------------------
+// Recent Searches Management
+// ----------------------------
+
 // Save recent searches in local storage
+// City- city name to save
 function saveRecentSearch(city) {
     let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
-    if (!searches.includes(city)) {
-        searches.unshift(city);
+
+    const normalizedCity = city.trim().toLowerCase();
+
+    const exists = searches.some(existing => existing.trim().toLowerCase() === normalizedCity);
+
+    if (!exists) {
+        const formattedCity = city.trim().split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+        searches.unshift(formattedCity);
         if(searches.length > 8){
             searches = searches.slice(0, 8);
         }
@@ -222,17 +279,52 @@ function updateRecentSearches() {
     const searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
     searches.forEach(city => {
         const li = document.createElement('li');
+        li.className = 'relative group';
         li.innerHTML = `
-            <button class="w-full p-3 text-left rounded-lg bg-gray-50/50 hover:bg-blue-200/50 backdrop-blur-sm transition-colors duration-200 flex items-center justify-between cursor-pointer border border-blue-300/70">
+            <button class="w-full p-3 pr-10 text-left rounded-lg bg-gray-50/50 hover:bg-blue-200/50 backdrop-blur-sm transition-colors duration-200 flex items-center justify-between cursor-pointer border border-blue-300/70">
                 <span>${city}</span>
-                <i class="fa-solid fa-arrow-rotate-left ml-2 text-blue-500"></i>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-rotate-left ml-2 text-blue-500"></i>
+                    <button class="clear-single-btn absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-700">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
             </button>
         `;
         li.addEventListener('click', () => fetchWeatherByCity(city));
+
+         // Clear single search handler
+         li.querySelector('.clear-single-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            clearSingleSearch(city);
+        });
+
+
         recentSearches.appendChild(li);
     });
 }
 
+// Clear all search
+function clearAllRecentSearches() {
+    localStorage.removeItem('recentSearches');
+    updateRecentSearches();
+}
+
+// Clear single search
+function clearSingleSearch(cityToRemove) {
+    let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+    searches = searches.filter(city => city !== cityToRemove);
+    localStorage.setItem('recentSearches', JSON.stringify(searches));
+    updateRecentSearches();
+}
+
+
+// ----------------------------
+// Background Image Handling
+// ----------------------------
+
+// Fetches weather-themed background image from Unsplash
+// condition - Weather condition keyword
 
 async function getWeatherBackground(condition) {
     try {
@@ -252,6 +344,8 @@ async function getWeatherBackground(condition) {
     }
 }
 
+// Sets background image based on weather condition
+// condition - Weather condition keyword
 async function setWeatherBackground(condition) {
     try {
         const imageUrl = await getWeatherBackground(condition);
@@ -264,7 +358,3 @@ async function setWeatherBackground(condition) {
 }
 
 
-//event listerner
-searchBtn.addEventListener('click', () => fetchWeatherByCity(cityInput.value));
-currentLocationBtn.addEventListener('click', fetchWeatherByLocation);
-window.addEventListener('load', updateRecentSearches); 
