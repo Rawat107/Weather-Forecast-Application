@@ -39,7 +39,7 @@ For detailed development process, challenges faced, and technical deep dive:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/weather-app.git
+   git clone https://github.com/Rawat107/weather-app.git
    cd weather-app
    ```
    
