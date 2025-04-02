@@ -39,8 +39,8 @@ For detailed development process, challenges faced, and technical deep dive:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Rawat107/weather-app.git
-   cd weather-app
+   git clone https://github.com/Rawat107/Weather-Forecast-Application.git
+   cd Weather-Forecast-Application
    ```
    
 2. **Create environment file**
